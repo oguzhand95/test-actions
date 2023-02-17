@@ -1,0 +1,26 @@
+---
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cerbos:
+    name: "Cerbos"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cerbos
+        uses: cerbos/cerbos-setup-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          version: latest
+
+      - name: Compile with Cerbos
+        uses: cerbos/cerbos-compile-action@v1
+        with:
+          policyDir: policies
